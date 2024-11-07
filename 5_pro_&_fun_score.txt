@@ -1,0 +1,176 @@
+mysql> create database Score;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use score;
+Database changed
+
+mysql> create table stud_marks(name char(20),total_marks int);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into stud_marks values('sima',995);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_marks values('sunil',865);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_marks values('disha',945);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_marks values('mina',925);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_marks values('sayli',1000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_marks values('vina',745);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into stud_marks values('ram',865);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from stud_marks;
++-------+-------------+
+| name  | total_marks |
++-------+-------------+
+| sima  |         995 |
+| sunil |         865 |
+| disha |         945 |
+| mina  |         925 |
+| sayli |        1000 |
+| vina  |         745 |
+| ram   |         865 |
++-------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> create table result(roll_no int primary key,name char(20),class char(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into result values(1,'sima');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into result(roll_no,name) values(1,'sima');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into result(roll_no,name) values(2,'sunil');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into result(roll_no,name) values(3,'disha');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into result(roll_no,name) values(4,'mina');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into result(roll_no,name) values(5,'sayli');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into result(roll_no,name) values(6,'vina');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from result;
++---------+-------+-------+
+| roll_no | name  | class |
++---------+-------+-------+
+|       1 | sima  | NULL  |
+|       2 | sunil | NULL  |
+|       3 | disha | NULL  |
+|       4 | mina  | NULL  |
+|       5 | sayli | NULL  |
+|       6 | vina  | NULL  |
++---------+-------+-------+
+6 rows in set (0.00 sec)
+
+mysql> delimiter //
+mysql> create procedure proc_Grade(in r int(2),out grade char(25))
+begin
+declare m int(4);
+select total_marks into m from stud_marks where name=(select name from Result where roll_no=r);
+if m>=990 and m<=1500 then
+select 'Distinction' into grade;
+update Result set Class='Distinction' where Roll_no=r;
+elseif m>=900 and m<=989 then
+select 'FirstClass' into grade;
+update Result set Class='FirstClass' where Roll_no=r;
+elseif m>=825 and m<=899 then
+select 'SecondClass' into grade;
+update Result set Class='SecondClass' where Roll_no=r;
+else
+select '--' into grade;
+update Result set Class='--' where Roll_no=r;
+end if;
+end //
+
+Query OK, 0 rows affected, 2 warnings (0.01 sec)
+
+mysql> delimiter //
+mysql> create function func_Grade(r int(2))
+returns varchar(25)
+deterministic
+begin
+declare grade varchar(25);
+call proc_Grade(r,grade);
+return grade;
+end //
+
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> select func_Grade(1); //
++---------------+
+| func_Grade(1) |
++---------------+
+| Distinction   |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> select func_Grade(2); //
++---------------+
+| func_Grade(2) |
++---------------+
+| SecondClass   |
++---------------+
+1 row in set (0.05 sec)
+
+mysql> select func_Grade(3); //
++---------------+
+| func_Grade(3) |
++---------------+
+| FirstClass    |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> select func_Grade(4); //
++---------------+
+| func_Grade(4) |
++---------------+
+| FirstClass    |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> select func_Grade(5); //
++---------------+
+| func_Grade(5) |
++---------------+
+| Distinction   |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> select func_Grade(6); //
++---------------+
+| func_Grade(6) |
++---------------+
+| --            |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> select*from result; //
++---------+-------+-------------+
+| roll_no | name  | class       |
++---------+-------+-------------+
+|       1 | sima  | Distinction |
+|       2 | sunil | SecondClass |
+|       3 | disha | FirstClass  |
+|       4 | mina  | FirstClass  |
+|       5 | sayli | Distinction |
+|       6 | vina  | --          |
++---------+-------+-------------+
+6 rows in set (0.00 sec)
+
+

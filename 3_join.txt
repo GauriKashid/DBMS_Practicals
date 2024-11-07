@@ -1,0 +1,319 @@
+mysql> create database joins;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use joins;
+Database changed
+
+mysql> create table inst ( inst_id int(10),inst_name varchar(20), inst_salary int(20));
+
+Query OK, 0 rows affected, 2 warnings (0.04 sec)
+
+mysql> create table department(dept_id int(10), dept_name varchar(20), inst_id int(20));
+
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> INSERT INTO inst VALUES(1,'Prachi',50000);
+
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(2,'Apurva',51000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(3,'Sayali',52000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(4,'Sakshi',55000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(5,'Tanaya',40000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(6,'Aarya',30000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(7,'Rutuja',60000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(8,'Aakansha',40000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(9,'Tahseen',45000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(10,'Apurva',50000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(11,'Kanishka',20000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(12,'Aditi',45000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO inst VALUES(13,'Shubham',30000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> Select * from inst;
++---------+-----------+-------------+
+| inst_id | inst_name | inst_salary |
++---------+-----------+-------------+
+|       1 | Prachi    |       50000 |
+|       2 | Apurva    |       51000 |
+|       3 | Sayali    |       52000 |
+|       4 | Sakshi    |       55000 |
+|       5 | Tanaya    |       40000 |
+|       6 | Aarya     |       30000 |
+|       7 | Rutuja    |       60000 |
+|       8 | Aakansha  |       40000 |
+|       9 | Tahseen   |       45000 |
+|      10 | Apurva    |       50000 |
+|      11 | Kanishka  |       20000 |
+|      12 | Aditi     |       45000 |
+|      13 | Shubham   |       30000 |
++---------+-----------+-------------+
+13 rows in set (0.00 sec)
+
+mysql> INSERT INTO department VALUES(111,'Computer',1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO department VALUES(222,'IT',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO department VALUES(333,'Electrical',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO department VALUES(444,'Mechanical',4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO department VALUES(555,'Civil',5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO department VALUES(666,'AIML',6);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO department VALUES(777,'AIDS',7);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO department VALUES(888,'ECE',8);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO department VALUES(999,'ENTC',9);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> Select * from department;
++---------+------------+---------+
+| dept_id | dept_name  | inst_id |
++---------+------------+---------+
+|     111 | Computer   |       1 |
+|     222 | IT         |       2 |
+|     333 | Electrical |       3 |
+|     444 | Mechanical |       4 |
+|     555 | Civil      |       5 |
+|     666 | AIML       |       6 |
+|     777 | AIDS       |       7 |
+|     888 | ECE        |       8 |
+|     999 | ENTC       |       9 |
++---------+------------+---------+
+9 rows in set (0.00 sec)
+
+mysql> Select * from inst INNER JOIN department ON inst.inst_id=department.inst_id;
++---------+-----------+-------------+---------+------------+---------+
+| inst_id | inst_name | inst_salary | dept_id | dept_name  | inst_id |
++---------+-----------+-------------+---------+------------+---------+
+|       1 | Prachi    |       50000 |     111 | Computer   |       1 |
+|       2 | Apurva    |       51000 |     222 | IT         |       2 |
+|       3 | Sayali    |       52000 |     333 | Electrical |       3 |
+|       4 | Sakshi    |       55000 |     444 | Mechanical |       4 |
+|       5 | Tanaya    |       40000 |     555 | Civil      |       5 |
+|       6 | Aarya     |       30000 |     666 | AIML       |       6 |
+|       7 | Rutuja    |       60000 |     777 | AIDS       |       7 |
+|       8 | Aakansha  |       40000 |     888 | ECE        |       8 |
+|       9 | Tahseen   |       45000 |     999 | ENTC       |       9 |
++---------+-----------+-------------+---------+------------+---------+
+9 rows in set (0.00 sec)
+
+mysql> Select * from inst LEFT JOIN department ON inst.inst_id=department.inst_id;
++---------+-----------+-------------+---------+------------+---------+
+| inst_id | inst_name | inst_salary | dept_id | dept_name  | inst_id |
++---------+-----------+-------------+---------+------------+---------+
+|       1 | Prachi    |       50000 |     111 | Computer   |       1 |
+|       2 | Apurva    |       51000 |     222 | IT         |       2 |
+|       3 | Sayali    |       52000 |     333 | Electrical |       3 |
+|       4 | Sakshi    |       55000 |     444 | Mechanical |       4 |
+|       5 | Tanaya    |       40000 |     555 | Civil      |       5 |
+|       6 | Aarya     |       30000 |     666 | AIML       |       6 |
+|       7 | Rutuja    |       60000 |     777 | AIDS       |       7 |
+|       8 | Aakansha  |       40000 |     888 | ECE        |       8 |
+|       9 | Tahseen   |       45000 |     999 | ENTC       |       9 |
+|      10 | Apurva    |       50000 |    NULL | NULL       |    NULL |
+|      11 | Kanishka  |       20000 |    NULL | NULL       |    NULL |
+|      12 | Aditi     |       45000 |    NULL | NULL       |    NULL |
+|      13 | Shubham   |       30000 |    NULL | NULL       |    NULL |
++---------+-----------+-------------+---------+------------+---------+
+13 rows in set (0.00 sec)
+
+mysql> Select * from department LEFT JOIN inst ON inst.inst_id=department.inst_id;
++---------+------------+---------+---------+-----------+-------------+
+| dept_id | dept_name  | inst_id | inst_id | inst_name | inst_salary |
++---------+------------+---------+---------+-----------+-------------+
+|     111 | Computer   |       1 |       1 | Prachi    |       50000 |
+|     222 | IT         |       2 |       2 | Apurva    |       51000 |
+|     333 | Electrical |       3 |       3 | Sayali    |       52000 |
+|     444 | Mechanical |       4 |       4 | Sakshi    |       55000 |
+|     555 | Civil      |       5 |       5 | Tanaya    |       40000 |
+|     666 | AIML       |       6 |       6 | Aarya     |       30000 |
+|     777 | AIDS       |       7 |       7 | Rutuja    |       60000 |
+|     888 | ECE        |       8 |       8 | Aakansha  |       40000 |
+|     999 | ENTC       |       9 |       9 | Tahseen   |       45000 |
++---------+------------+---------+---------+-----------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> Select * from department RIGHT JOIN inst ON inst.inst_id=department.inst_id;
++---------+------------+---------+---------+-----------+-------------+
+| dept_id | dept_name  | inst_id | inst_id | inst_name | inst_salary |
++---------+------------+---------+---------+-----------+-------------+
+|     111 | Computer   |       1 |       1 | Prachi    |       50000 |
+|     222 | IT         |       2 |       2 | Apurva    |       51000 |
+|     333 | Electrical |       3 |       3 | Sayali    |       52000 |
+|     444 | Mechanical |       4 |       4 | Sakshi    |       55000 |
+|     555 | Civil      |       5 |       5 | Tanaya    |       40000 |
+|     666 | AIML       |       6 |       6 | Aarya     |       30000 |
+|     777 | AIDS       |       7 |       7 | Rutuja    |       60000 |
+|     888 | ECE        |       8 |       8 | Aakansha  |       40000 |
+|     999 | ENTC       |       9 |       9 | Tahseen   |       45000 |
+|    NULL | NULL       |    NULL |      10 | Apurva    |       50000 |
+|    NULL | NULL       |    NULL |      11 | Kanishka  |       20000 |
+|    NULL | NULL       |    NULL |      12 | Aditi     |       45000 |
+|    NULL | NULL       |    NULL |      13 | Shubham   |       30000 |
++---------+------------+---------+---------+-----------+-------------+
+13 rows in set (0.00 sec)
+
+mysql> select inst_name from inst where inst_salary=(select max(inst_salary) from inst);
++-----------+
+| inst_name |
++-----------+
+| Rutuja    |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select inst_name from inst where inst_id  in (select inst_id from department);
++-----------+
+| inst_name |
++-----------+
+| Prachi    |
+| Apurva    |
+| Sayali    |
+| Sakshi    |
+| Tanaya    |
+| Aarya     |
+| Rutuja    |
+| Aakansha  |
+| Tahseen   |
++-----------+
+9 rows in set (0.00 sec)
+
+mysql> create view inst_view as select inst_name,inst_salary from inst where inst_salary>50000;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from inst_view;
++-----------+-------------+
+| inst_name | inst_salary |
++-----------+-------------+
+| Apurva    |       51000 |
+| Sayali    |       52000 |
+| Sakshi    |       55000 |
+| Rutuja    |       60000 |
++-----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE inst_view SET inst_salary=55000 WHERE inst_name='Sakshi';
+
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> select * from inst_view;
++-----------+-------------+
+| inst_name | inst_salary |
++-----------+-------------+
+| Apurva    |       51000 |
+| Sayali    |       52000 |
+| Sakshi    |       55000 |
+| Rutuja    |       60000 |
++-----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE OR REPLACE view inst_view AS SELECT inst_id,inst_name,inst_salary FROM inst WHERE inst_salary >40000;
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from inst_view;
++---------+-----------+-------------+
+| inst_id | inst_name | inst_salary |
++---------+-----------+-------------+
+|       1 | Prachi    |       50000 |
+|       2 | Apurva    |       51000 |
+|       3 | Sayali    |       52000 |
+|       4 | Sakshi    |       55000 |
+|       7 | Rutuja    |       60000 |
+|       9 | Tahseen   |       45000 |
+|      10 | Apurva    |       50000 |
+|      12 | Aditi     |       45000 |
++---------+-----------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> select distinct dept_name from department;
++------------+
+| dept_name  |
++------------+
+| Computer   |
+| IT         |
+| Electrical |
+| Mechanical |
+| Civil      |
+| AIML       |
+| AIDS       |
+| ECE        |
+| ENTC       |
++------------+
+9 rows in set (0.00 sec)
+
+mysql> select avg(inst_salary) from inst;
++------------------+
+| avg(inst_salary) |
++------------------+
+|       43692.3077 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(inst_name) from inst,department where dept_name='IT';
++------------------+
+| count(inst_name) |
++------------------+
+|               13 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(inst_id) from department where dept_name='IT';
++----------------+
+| count(inst_id) |
++----------------+
+|              1 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(inst_salary) from department,inst where dept_name='Computer';
++------------------+
+| sum(inst_salary) |
++------------------+
+|           568000 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(inst_salary) from inst,department;
++------------------+
+| sum(inst_salary) |
++------------------+
+|          5112000 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql>
